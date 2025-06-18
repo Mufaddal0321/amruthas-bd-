@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Click the Cake - Birthday Surprise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #9D50BB, #6E48AA);
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      font-family: 'Pacifico', cursive;
+      color: #fff;
+      margin: 30px 0 10px;
+    }
+    .cake-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .cake {
+      width: 100px;
+      height: 100px;
+      background: url('https://i.imgur.com/QBgvRzB.png') no-repeat center/contain;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .cake:hover {
+      transform: scale(1.1);
+    }
+    .pastry {
+      width: 120px;
+      height: 120px;
+      background: url('https://i.imgur.com/f9Qx9h8.png') no-repeat center/contain;
+      cursor: pointer;
+      display: none;
+    }
+    .message-card {
+      width: 300px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 20px;
+      margin: 10px;
+      position: relative;
+      display: none;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+    .message-card .sender {
+      font-weight: bold;
+      color: #6a1b9a;
+      margin-bottom: 10px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Click the Cake to Reveal Pastries 🎂</h1>
+  <div class="cake-container" id="cakeContainer">
+    <div class="cake" id="mainCake"></div>
+  </div>
+
+  <script>
+    const messages = [
+      {
+        sender: "Fumenim",
+        text: `Happy Birthday, Amrutha! 💖<br>From the moment you stepped into my life, everything became brighter, softer, and filled with love. Your smile is my favorite sunrise, and your laughter is the music my heart loves the most.<br>Today is all about you — the beautiful soul who brings magic into every moment. I’m so lucky to call you mine.<br>Let’s make this birthday unforgettable, just like the way you’ve made my world unforgettable. 💫<br>I love you forever. 💝`
+      },
+      {
+        sender: "Vaishnavi",
+        text: `Heyyy oldy!!<br>Happy happy birthday to you!<br>I miss the time we didn’t need to discuss or plan before meeting we just knew we’d see each other.<br>I have never said in so many words but you don’t know how much I cherish you and our memories!❤️<br>Let’s catch up soon !!<br>Tell me a day before showing up this time.`
+      },
+      {
+        sender: "Nandini",
+        text: `Happiest Birthday Amrutha!!<br>Wishing you years filled with magical moments and endless joy!!!`
+      },
+      {
+        sender: "Nikitha",
+        text: `Happy Birthday Amruthaa 🥳❤️<br>To the girl who’s made of giggles, stardust, and all things lovely! ✨<br>Wishing you a day full of magic, sparkles, cake, and everything that makes you as wonderfully adorable as you are! 🎈🍰<br>And ur smile is really cute so never let it fade awayyyy!!🫶🏻🫶🏻`
+      },
+      {
+        sender: "Mikhael",
+        text: `At 20, you’re officially too old to count your age on your fingers. In dog’s year, you are dead. But you are still here. How amazing is that?<br>Anyways although I knew you only kinda like the end of our school years, it was and is still worthwhile to be with you.<br>Now this sounds too formal but seriously love you lots and Happy birthday AMMU!!!<br>WELCOME TO THE 20s…where absolutely nothing changes.🥰😍😜`
+      },
+      {
+        sender: "Madeline",
+        text: `Happy birthdayy bestie 🥳<br>Can’t believe it’s been 6 years of us being best friends — since 2018! You’ve been my biggest support and the one who taught me how to be brave. So so grateful for you always. Love you loads, enjoy your day!! ❤️🎉<br>Once Again many more happy returns of the day Amrutha 🥳🥳`
+      },
+      {
+        sender: "Skibidi",
+        text: `Happy Birthday to the tube-light of our gang 🎉💥<br>From playing skribble in 3rd sem to sitting in olives and pulling your legs, we've spent less time than your brain spends processing my jokes on you, yet it's memorable.<br>Thanks for finding me annoying, something not many can do.<br>Much memories to make in the upcoming year!<br>Hope your day is surprisingly beautiful 🍻.<br>Stay awesome (and slightly tolerable). 🎉😈`
+      },
+      {
+        sender: "Aishwarya Chotu",
+        text: `HAPPY BIRTHDAY to my favorite person ever! 🎉💖<br>From sharing snacks in class to sharing secrets after school, you’ve been my constant — my best friend, my personal clown, and sometimes, my brutally honest therapist 😅.<br>You’ve helped me laugh through heartbreaks, pushed me to be stronger, and reminded me to never settle — not in love, not in life, not ever.<br>So here’s to you — the real MVP of my school days and beyond. May this year bring you everything you deserve: happiness, love, peace, and endless reasons to smile☺️🫂🫂<br>Happy Happy birthday, my soul-sister. I love you forever! 💕🎂🎈`
+      }
+    ];
+
+    const container = document.getElementById("cakeContainer");
+    const cake = document.getElementById("mainCake");
+
+    cake.addEventListener("click", () => {
+      cake.style.display = 'none';
+
+      messages.forEach((msg, index) => {
+        const pastry = document.createElement("div");
+        pastry.className = "pastry";
+        pastry.addEventListener("click", () => {
+          const card = document.createElement("div");
+          card.className = "message-card";
+
+          const sender = document.createElement("div");
+          sender.className = "sender";
+          sender.textContent = msg.sender;
+
+          const text = document.createElement("div");
+          text.innerHTML = msg.text;
+
+          card.appendChild(sender);
+          card.appendChild(text);
+
+          container.appendChild(card);
+          card.style.display = "block";
+        });
+        container.appendChild(pastry);
+        pastry.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
